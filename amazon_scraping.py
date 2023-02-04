@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from csv import writer
+import time
 
 product_Url = []
 product_title = []
@@ -109,6 +110,7 @@ def main(URL):
     except AttributeError:
         asin_id = "NA"
         product_asin.append(asin_id)
+    time.sleep(2)
 
 
 if __name__ == '__main__':
@@ -117,6 +119,7 @@ if __name__ == '__main__':
     # iterating over the urls
     for links in file.readlines():
         main(links)
+        time.sleep(5)
 
     print('Product URL:', len(product_Url), product_Url)
     print('Product Title:', len(product_title), product_title)
@@ -126,10 +129,10 @@ if __name__ == '__main__':
     print('Product ASIN:', len(product_asin), product_asin)
     print('Product Description:', len(product_description), product_description)
 
-    with open("output.csv", "w", newline='', encoding='UTF-8') as f:
+    with open("out.csv", "w", newline='', encoding='UTF-8') as f:
         thewriter = writer(f)
         header = ['Product Url', 'Product Title', 'Price', 'Rating', 'Number of Review', 'ASIN',
-                  'Product Description', ]
+                  'Product Description']
         thewriter.writerow(header)
         for i in range(len(product_Url)):
             productInfo = [product_Url[i], product_title[i], product_price[i], product_rating[i], product_review[i], product_asin[i], product_description[i]]
